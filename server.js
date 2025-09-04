@@ -5,7 +5,7 @@
 /* ***********************
  * Require Statements
  *************************/
-const expressLayouts = require("espress-ejs-layouts") 
+const expressLayouts = require("express-ejs-layouts") 
 const express = require("express")
 const env = require("dotenv").config()
 const app = express()
@@ -29,8 +29,8 @@ app.use(static)
 //index route
 /* "/" - This is route being watched. It indicates the base route of the application or the route which has no specific resource requested.
 */
-app.get('/', function(req, res){
-  res.render('index', {title: 'Home'})
+app.get("/", function(req, res){
+  res.render("index", {title: "Home"})
 })
 
 /* ***********************
