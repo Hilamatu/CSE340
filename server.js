@@ -26,6 +26,13 @@ app.set("layout", "./layouts/layout") // not at views root when the express ejs 
  *************************/
 app.use(static)
 
+//index route
+/* "/" - This is route being watched. It indicates the base route of the application or the route which has no specific resource requested.
+*/
+app.get('/', function(req, res){
+  res.render('index', {title: 'Home'})
+})
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
