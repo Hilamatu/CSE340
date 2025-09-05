@@ -79,7 +79,7 @@ nav ul {
 /*Sales banner and image*/
 .content {
     position: relative; 
-    padding: min(5em, 8%);
+    padding: 5em 3.5em 8em 2em;
     max-width: 1200px;
     
 }
@@ -92,26 +92,23 @@ nav ul {
 
 .sales {
   position: absolute;
-  top: 10%;          /* relative to .content height */
-  left: 8%;          /* relative to .content width */
-  width: 25%;        /* takes 25% of .content width */
-  max-width: 300px;  /* never gets too huge */
-  min-width: 180px;  /* stays readable on mobile */
+  top: 5%;                    /* relative to .content */
+  left: 5%;
+  width: clamp(180px, 25%, 300px); /* scales between min 180px and max 300px */
+  padding: clamp(0.8rem, 1.5vw, 1.2rem); /* responsive padding */
   background-color: rgba(255, 254, 254, 0.75);
-  padding: 1rem;
   border-radius: 10px;
-  box-sizing: border-box;
   z-index: 10;
 }
 
 /* scales better */
 .sales h3 {
-  font-size: clamp(2rem, 2vw, 2.3rem);
+  font-size: clamp(1.2rem, 2vw, 2.3rem);
   margin-bottom: 0.5rem;
 }
 
 .sales p {
-  font-size: clamp(1.5rem, 1.5vw, 2rem);
+  font-size: clamp(1rem, 1.5vw, 2rem);
   margin: .8rem 0;
 }
 
@@ -240,6 +237,12 @@ color: black;
       "upgrades"; /* review first, upgrades below */
     padding: 1rem;}
 
+  .sales {
+    top: 2%;
+    left: 2%;
+    width: 40%;      /* almost full width */
+    padding: 1rem;
+  }
   /* Adjust review font size for smaller screens */
   .review li {
     font-size: 1rem;
