@@ -1,5 +1,5 @@
 CREATE TYPE public.account_type AS ENUM
-    ('Employee', 'Admin');
+    ('Employee', 'Admin', 'Client');
 
 ALTER TYPE public.account_type
     OWNER TO cse340;
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.inventory
 	inv_model character varying NOT NULL,
 	inv_year character(4) NOT NULL,
 	inv_image character varying NOT NULL,
-    inv_description text NOT NULL,
+  inv_description text NOT NULL,
 	inv_thumbnail character varying NOT NULL,
 	inv_price numeric (9, 0) NOT NULL,
 	inv_miles integer NOT NULL,
