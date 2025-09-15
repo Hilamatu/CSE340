@@ -11,6 +11,7 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute")
 
 
 /* ***********************
@@ -31,6 +32,8 @@ app.use(static)
 /* "/" - This is route being watched. It indicates the base route of the application or the route which has no specific resource requested.
 */
 app.get("/", baseController.buildHome)
+// Inventory routes
+app.use('/inv', inventoryRoute)
 
 /* ***********************
  * Local Server Information
