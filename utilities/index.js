@@ -66,7 +66,7 @@ Util.buildDetailView = async function(data){
   if(data.length > 0){
     grid = '<section class="detail-container ">' 
     grid += '<div class="detail-image">'
-    grid += '<img src="' + data[0].inv_image +'" alt="Image of '+ data[0].inv_make + ' ' + data[0].inv_model +' on CSE Motors" />'
+    grid += '<img src="' + data[0].inv_image +'" alt="Image of '+ data[0].inv_make + ' ' + data[0].inv_model +' on CSE Motors">'
     grid += '</div>'
     grid += '<div class="detail-info">'
     grid += '<h2>' + data[0].inv_make + ' ' + data[0].inv_model + ' ' + 'Details' + '</h2>'
