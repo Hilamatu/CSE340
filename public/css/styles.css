@@ -309,6 +309,17 @@ color: black;
   padding-left: 0;
 }
 
+/* Error page */
+.error-container {
+  text-align: center;
+  padding: 2rem;
+}
+ .error-container p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: 1rem;
+ }
+
 /* ========== MOBILE STYLES ========== */
 @media (max-width: 768px) {
 
