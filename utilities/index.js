@@ -24,16 +24,6 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-/* ****************************************
- * Middleware For Handling Errors
- * Wrap other function in this for 
- * General Error Handling
- **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-
-module.exports = Util;
-
-
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -66,3 +56,40 @@ Util.buildClassificationGrid = async function(data){
   }
   return grid
 }
+
+/* **************************************
+* Build the detail view HTML
+* ************************************ */
+
+Util.buildDetailView = async function(data){
+  let grid
+  if(data.length > 0){
+    grid = '<section class="detail-container ">' 
+    grid += '<div class="detail-image">'
+    grid += '<img src="' + data[0].inv_image +'" alt="Image of '+ data[0].inv_make + ' ' + data[0].inv_model +' on CSE Motors" />'
+    grid += '</div>'
+    grid += '<div class="detail-info">'
+    grid += '<h2>' + data[0].inv_make + ' ' + data[0].inv_model + ' ' + 'Details' + '</h2>'
+    grid += '<h3>' + 'Price: $' + new Intl.NumberFormat('en-US').format(data[0].inv_price) + '</h3>'
+    grid += '<p class="description"><strong> Description: </strong>' + data[0].inv_description + '</p>'
+    grid += '<ul>'
+    grid += '<li><strong>Color: </strong>' + data[0].inv_color + '</li>'
+    grid += '<li><strong>Mileage: </strong>' + new Intl.NumberFormat('en-US').format(data[0].inv_miles) + '</li>'
+    grid += '</ul>'
+    grid += '</div>'
+    grid += '</section>'
+
+} else { 
+    grid + '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+module.exports = Util;

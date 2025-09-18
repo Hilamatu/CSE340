@@ -1,0 +1,11 @@
+<% if (title) { %> <%# EJS code block to contain JS if structure to determine if title exists%>
+<h1><%= title %></h1> <%# True -> display whithin h1 element%>
+<% } else { 
+  res.redirect('/') // False -> redirect to default indx route
+} %>
+ 
+<%# messages() %> <%# <- comment mark (#), disables this code. In the future, 
+                    when messages have been implemented, you'll replace the comment with the 
+                    unescaped mark (—)s %>
+
+<%- grid %> <%#This allows HTML to be displayed. Remember our grid variable contains HTML. %>
