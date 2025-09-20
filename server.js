@@ -13,6 +13,38 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require ('./utilities/')
+const session = require("express-session")
+const pool = require('./database/')
+const accountController = require('./routes/accountRoute')
+const bodyParser = require('body-parser')
+
+
+/* ***********************
+ * Middleware
+ * ************************/
+ app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  /* indicates a "secret" name - value pair 
+  that will be used to protect the session. We will create the value of the secret in the .env file
+   */
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+// Express messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res,next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 /* ***********************
  * View Engine and Templates
@@ -32,13 +64,15 @@ app.use(static)
 /* "/" - This is route being watched. It indicates the base route of the application or the route which has no specific resource requested.
 */
 // Wraps the buildHome function in the error handling middleware
-app.get("/", utilities.handleErrors(baseController.buildHome)) 
+app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
-app.use('/inv', inventoryRoute)
+app.use('/inv', inventoryRoute);
+// My account route
+app.use('/account', accountController);
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
-})
+});
 
 /* ***********************
 * Express Error Handler

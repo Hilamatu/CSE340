@@ -4,8 +4,6 @@
   res.redirect('/') // False -> redirect to default indx route
 } %>
  
-<%# messages() %> <%# <- comment mark (#), disables this code. In the future, 
-                    when messages have been implemented, you'll replace the comment with the 
-                    unescaped mark (—)s %>
+<%- messages() %> <%# Displays a flash message if any%>
 
 <%- grid %> <%#This allows HTML to be displayed. Remember our grid variable contains HTML. %>
