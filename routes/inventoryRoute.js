@@ -4,6 +4,7 @@ const router = new express.Router()
 const invController = require('../controllers/invController')
 const utilities = require('../utilities/')
 const errorController = require('../controllers/errorController')
+const managementController = require('../controllers/managementController')
 
 //Route to build inventory management view
 router.get('/management', utilities.handleErrors(invController.buildManagementView));
@@ -13,6 +14,13 @@ router.get('/type/:classificationId', utilities.handleErrors(invController.build
 
 //details route
 router.get('/detail/:invId', utilities.handleErrors(invController.buildByInvIdView));
+
+router.get('/', utilities.handleErrors(managementController.buildMgmtView))
+
+router.get('/add-classification', utilities.handleErrors(managementController.buildAddClassification))
+
+//Post the add-classification
+router.post('/add-classification', utilities.handleErrors(managementController.addClassification))
 
 // Error Trigger Route
 router.get('/error', utilities.handleErrors(errorController.triggerError));

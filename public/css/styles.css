@@ -321,7 +321,7 @@ color: black;
  }
 
  /* Log in page */
-.login-wrapper{
+.form-wrapper{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -349,15 +349,15 @@ label{
   color: white;
 }
 
-.login-button{
+.form-button{
   font-size: large;
   justify-self: center;
-  width: 100px;
+  width: fit-content;
   border-radius: 20px;
 }
 
 
-.login-button:hover {
+.form-button:hover {
   text-decoration: underline;
   transform: translateY(-2px)
 }
