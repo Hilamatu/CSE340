@@ -19,6 +19,7 @@ async function buildAddClassification(req, res, next_){
 })
 }
 
+//Function that will import the query from Models to add classification
 async function addClassification(req, res) {
   
   const { classification_name } = req.body
@@ -30,23 +31,71 @@ async function addClassification(req, res) {
   if (regResult) {
     req.flash(
       "notice",
-      `Congratulations, you\'re registered ${classification_name}.`
+      `Congratulations, you\'ve registered ${classification_name}.`
     )
     let nav = await utilities.getNav()
-    res.status(201).render("inventory/add-classification", {
+    res.status(201).render("inventory/management", {
       title: "Add Classification success",
       nav,
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
     let nav = await utilities.getNav()
-    
-    res.status(501).render("inventory/add-classification", {
+
+    res.status(501).render("inventory/management", {
       title: "Add Classification",
       nav,
     })
   }
 }
 
+// Build add-inventory view
+async function buildAddInventory(req, res, next_){
+    let nav = await utilities.getNav()
+    res.render('inventory/add-inventory', {
+    title: 'Add inventory',
+    nav,
+    errors: null
+})
+}
 
-module.exports = {buildMgmtView, buildAddClassification, addClassification}
+//Function that will import the query to add inventory
+async function addInventory(req, res) {
+  
+  const { inv_make, inv_model, inv_year, inv_image, inv_description, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body
+
+  const regResult = await addClassificationModel.addInventory(
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_image,
+    inv_description,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color
+
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Congratulations, inventory added for  ${inv_make}.`
+    )
+    let nav = await utilities.getNav()
+    res.status(201).render("inventory/management", {
+      title: "Add inventory success",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the registration failed.")
+    let nav = await utilities.getNav()
+    
+    res.status(501).render("inventory/management", {
+      title: "Add Inventory",
+      nav,
+    })
+  }
+}
+
+module.exports = {buildMgmtView, buildAddClassification, addClassification, buildAddInventory, addInventory}

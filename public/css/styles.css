@@ -334,9 +334,15 @@ color: black;
   width: 80%;
   align-items: center;
   padding: 20px;
-  background: rgb(11, 16, 47);
+  background: rgb(18, 26, 77);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container p {
+  color: white;
+  justify-self: left;
+  font-style: italic;
 }
 
 .form-grid {
@@ -362,9 +368,25 @@ label{
   transform: translateY(-2px)
 }
 
-.form-grid p {
+.password-requirement {
   color: white;
-  font-size: 20px;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.form-container p {
+  justify-self: center;
+  font-size: large;
+}
+/* Style for invalid input fields */
+input:required:invalid, input:focus:invalid {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+}
+
+#password:required:valid {
+  border: 2px solid green;
+  background-color: #ffe6e6;
 }
 
 /* Registration style */

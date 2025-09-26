@@ -1,0 +1,43 @@
+<% if (title) { %>
+<h1><%=title%></h1>
+<%
+} else {
+    res.redirect('/')
+} %>
+<%- messages() %>
+
+<div class="form-wrapper">
+    <div class="form-container">
+        <form class="form-grid" action="/inv/add-inventory" method="POST">
+            <label for="classificationName">Classification</label>
+            <select id="classificationName" >
+            <label for="invmake">Make</label>
+            <input type="text" id="invmake" name="inv_make" pattern="[A-Za-z ]+" required>
+            
+            <label for="invmodel">Model</label>
+            <input type="text" id="invmodel" name="inv_model">
+
+            <label for="invyear">Year</label>
+            <input type="year" id="invyear" name="inv_year">
+
+            <label for="invimage">Image path</label>
+            <input type="image" id="invimage" name="inv_image">
+
+            <label for="invdescription">Description</label>
+            <input type="text" id="invdescription" name="inv_description">
+
+            <label for="invthumbnail">Thumbnail</label>
+            <input text="text" id="invthumbnail" name="inv_thumbnail">
+
+            <label for="invprice">Price</label>
+            <input type="number" id="invprice" name="inv_price">
+
+            <label for="invmiles">Miles</label>
+            <input type="number" id="invmiles" name="inv_miles">
+
+            <label for="invcolor">Color</label>
+            <input type="color" id="invcolor" name="inv_color">
+            <input class="form-button" type="submit" value="Add Classification">
+        </form>
+    </div>
+</div>

@@ -15,12 +15,20 @@ router.get('/type/:classificationId', utilities.handleErrors(invController.build
 //details route
 router.get('/detail/:invId', utilities.handleErrors(invController.buildByInvIdView));
 
+//Add management view route
 router.get('/', utilities.handleErrors(managementController.buildMgmtView))
 
+//Add classification route
 router.get('/add-classification', utilities.handleErrors(managementController.buildAddClassification))
 
 //Post the add-classification
 router.post('/add-classification', utilities.handleErrors(managementController.addClassification))
+
+//Add inventory route
+router.get('/add-inventory', utilities.handleErrors(managementController.buildAddInventory))
+
+//Post the add-inventory
+router.post('/add-inventory', utilities.handleErrors(managementController.addInventory))
 
 // Error Trigger Route
 router.get('/error', utilities.handleErrors(errorController.triggerError));
