@@ -5,7 +5,9 @@ async function buildMgmtView (req, res, next){
     let nav = await utilities.getNav()
     res.render('inventory/management', {
         title: 'Inventory Management Page',
-        nav
+        nav,
+        errors: null
+        
     })
 }
 
@@ -37,6 +39,7 @@ async function addClassification(req, res) {
     res.status(201).render("inventory/management", {
       title: "Add Classification success",
       nav,
+      errors: null
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
@@ -45,6 +48,7 @@ async function addClassification(req, res) {
     res.status(501).render("inventory/management", {
       title: "Add Classification",
       nav,
+      errors: null,
     })
   }
 }
@@ -55,7 +59,7 @@ async function buildAddInventory(req, res, next_){
     res.render('inventory/add-inventory', {
     title: 'Add inventory',
     nav,
-    errors: null
+    errors: null,
 })
 }
 
@@ -86,6 +90,7 @@ async function addInventory(req, res) {
     res.status(201).render("inventory/management", {
       title: "Add inventory success",
       nav,
+      erros:null,
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
@@ -94,6 +99,7 @@ async function addInventory(req, res) {
     res.status(501).render("inventory/management", {
       title: "Add Inventory",
       nav,
+      errors: null,
     })
   }
 }

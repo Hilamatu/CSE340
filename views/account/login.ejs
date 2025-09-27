@@ -5,14 +5,21 @@
     res.redirect('/')
 } %>
 <%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %> <%#eat the errors variable as an array and loop through the array, with each individual error being sent into a callback function.#%>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
  
 <div class="form-wrapper">
     <div class="form-container">
         <form class="form-grid" action="/account/login" method="POST">
             <label for="username">Email:</label>
-            <input type="email" id="username" name="account_email" required placeholder="Enter a valid email address">
+            <input type="email" id="username" name="account_email" placeholder="Enter a valid email address" value="<%= locals.account_firstname %>" required>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$" required >
+            <input type="password" id="password" name="account_password" placeholder="Insert your Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$" required>
             <span class="password-requirement">Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character</span>
             <input class="form-button" type="submit" value="login">   
         </form>

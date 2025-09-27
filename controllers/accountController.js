@@ -1,5 +1,6 @@
 const utilities = require('../utilities/')
 const accountModel = require('../models/account-model')
+const bcrypt = require("bcryptjs")
 
 
 /* ****************************************
@@ -11,6 +12,7 @@ async function buildAccountView(req, res, next){
     res.render('account/login', {
         title: 'Login',
         nav,
+        errors: null,
     })
 }
 
@@ -20,7 +22,7 @@ async function buildRegister(req, res, next_){
     res.render('account/register', {
     title: 'Register',
     nav,
-    errors: null
+    errors: null,
 })
 }
 
@@ -31,12 +33,25 @@ async function buildRegister(req, res, next_){
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
   const { account_firstname, account_lastname, account_email, account_password } = req.body
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10) // 10 is the saltRound indicating how many times a hash will be resent through the hashing algorithm
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    res.status(500).render("account/register", {
+      title: "Registration",
+      nav,
+      errors: null,
+    })
+  }
 
   const regResult = await accountModel.registerAccount(
     account_firstname,
     account_lastname,
     account_email,
-    account_password
+    hashedPassword
   )
 
   if (regResult) {
@@ -47,12 +62,14 @@ async function registerAccount(req, res) {
     res.status(201).render("account/login", {
       title: "Login",
       nav,
+      errors: null,
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
+      errors: null,
     })
   }
 }
