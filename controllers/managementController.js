@@ -56,7 +56,7 @@ async function addClassification(req, res) {
 // Build add-inventory view
 async function buildAddInventory(req, res, next_){
     let nav = await utilities.getNav()
-    let classificationList = await utilities.buildClassificationList() //Call the buildClassificationList to have the drop down reflect the current classification nav
+    let classificationList = await utilities.buildClassificationList() //Call the buildClassificationList to have the drop down reflect the current nav
     res.render('inventory/add-inventory', {
     title: 'Add inventory',
     nav,
@@ -68,9 +68,10 @@ async function buildAddInventory(req, res, next_){
 //Function that will import the query to add inventory
 async function addInventory(req, res) {
   
-  const { inv_make, inv_model, inv_year, inv_image, inv_description, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body
+  const { classification_id, inv_make, inv_model, inv_year, inv_image, inv_description, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body
 
   const regResult = await addClassificationModel.addInventory(
+    classification_id,
     inv_make,
     inv_model,
     inv_year,

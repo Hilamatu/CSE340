@@ -32,7 +32,10 @@ router.post('/add-classification',
 router.get('/add-inventory', utilities.handleErrors(managementController.buildAddInventory))
 
 //Post the add-inventory
-router.post('/add-inventory', utilities.handleErrors(managementController.addInventory))
+router.post('/add-inventory', 
+    invValidate.addInventoryRule(),
+        invValidate.checkInventoryData,
+        utilities.handleErrors(managementController.addInventory))
 
 // Error Trigger Route
 router.get('/error', utilities.handleErrors(errorController.triggerError));

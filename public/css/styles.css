@@ -407,6 +407,21 @@ input:required:invalid, input:focus:invalid {
   text-align: center;
 }
 
+.notice li{
+  list-style: none;
+  color: red;
+  font-style: italic;
+}
+
+.add-list {
+  margin-bottom: 20px;
+}
+.add-list li{
+  list-style: none;
+  font-size: 20px;
+  padding: 15px;
+}
+
 /* ========== MOBILE STYLES ========== */
 @media (max-width: 768px) {
 
