@@ -5,12 +5,22 @@
     res.redirect('/')
 } %>
 <%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %> <%#eat the errors variable as an array and loop through the array, with each individual error being sent into a callback function.#%>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
 
 <div class="form-wrapper">
     <div class="form-container">
+        <P>Field is required</P>
         <form class="form-grid" action="/inv/add-classification" method="POST">
             <label for="newClassification">Classification Name</label>
-            <input type="text" id="newClassification" name="classification_name" pattern="[A-Za-z ]+" required>
+            <span class="classification-requirement">NAME MUST BE ALPHABETIC CHARACTERS ONLY</span>
+            <input type="text" id="newClassification" name="classification_name" pattern="^[A-Za-z]+$" required>
 
             <input class="form-button" type="submit" value="Add Classification">
         </form>

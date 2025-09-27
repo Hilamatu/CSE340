@@ -56,9 +56,11 @@ async function addClassification(req, res) {
 // Build add-inventory view
 async function buildAddInventory(req, res, next_){
     let nav = await utilities.getNav()
+    let classificationList = await utilities.buildClassificationList() //Call the buildClassificationList to have the drop down reflect the current classification nav
     res.render('inventory/add-inventory', {
     title: 'Add inventory',
     nav,
+    classificationList,
     errors: null,
 })
 }
@@ -90,7 +92,7 @@ async function addInventory(req, res) {
     res.status(201).render("inventory/management", {
       title: "Add inventory success",
       nav,
-      erros:null,
+      errors:null,
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")

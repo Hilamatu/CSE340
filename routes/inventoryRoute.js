@@ -5,6 +5,7 @@ const invController = require('../controllers/invController')
 const utilities = require('../utilities/')
 const errorController = require('../controllers/errorController')
 const managementController = require('../controllers/managementController')
+const invValidate = require("../utilities/inventory-validation")
 
 //Route to build inventory management view
 router.get('/management', utilities.handleErrors(invController.buildManagementView));
@@ -22,7 +23,10 @@ router.get('/', utilities.handleErrors(managementController.buildMgmtView))
 router.get('/add-classification', utilities.handleErrors(managementController.buildAddClassification))
 
 //Post the add-classification
-router.post('/add-classification', utilities.handleErrors(managementController.addClassification))
+router.post('/add-classification', 
+    invValidate.classificationRule(),
+      invValidate.checkClassificationData,
+      utilities.handleErrors(managementController.addClassification))
 
 //Add inventory route
 router.get('/add-inventory', utilities.handleErrors(managementController.buildAddInventory))

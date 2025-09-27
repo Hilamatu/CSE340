@@ -21,4 +21,18 @@ async function addInventory(inv_make, inv_model, inv_year, inv_image, inv_descri
         return error.message
     }
 }
-module.exports = {addClassification, addInventory}
+
+/* *************************************
+Checking for existing classifications
+************************************** */
+async function checkExistingClassification(classification_name){
+  try {
+    const sql = "SELECT * FROM classification WHERE classification_name = $1"
+    const email = await pool.query(sql, [classification_name])
+    return email.rowCount
+  } catch (error) {
+    return error.message
+  }
+}
+
+module.exports = {addClassification, addInventory, checkExistingClassification}

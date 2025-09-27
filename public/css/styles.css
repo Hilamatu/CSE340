@@ -374,6 +374,12 @@ label{
   font-style: italic;
 }
 
+.classification-requirement {
+  color: white;
+  font-size: 10px;
+  font-style: italic;
+}
+
 .form-container p {
   justify-self: center;
   font-size: large;
@@ -381,7 +387,7 @@ label{
 /* Style for invalid input fields */
 input:required:invalid, input:focus:invalid {
   border: 2px solid red;
-  background-color: #ffe6e6;
+  background-color: #f09898;
 }
 
 #password:required:valid {
