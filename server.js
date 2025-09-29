@@ -17,6 +17,7 @@ const session = require("express-session")
 const pool = require('./database/')
 const accountController = require('./routes/accountRoute')
 const bodyParser = require('body-parser')
+const cookieParser = require("cookie-parser") //require the cookie parser that was installed
 
 /* ***********************
  * Middleware
@@ -44,6 +45,11 @@ app.use(function(req, res,next){
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+app.use(cookieParser())// allows the cookie parser to be implemented throughout the project
+
+app.use(utilities.checkJWTToken)// Universal piece of middleware to validate the token if present and if not, just move to the next
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -65,7 +71,7 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
 app.use('/inv', inventoryRoute);
-// My account route
+// My account route. All paths in accountRoute.js are prefixed with /account already
 app.use('/account', accountController);
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

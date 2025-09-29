@@ -1,0 +1,8 @@
+<% if (title) { %>
+<h1><%=title%></h1>
+<h2>Congratulations, you are logged in now.</h2>
+<%
+} else {
+    res.redirect('/')
+} %>
+<%- messages() %>
