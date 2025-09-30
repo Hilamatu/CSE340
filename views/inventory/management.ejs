@@ -5,7 +5,13 @@
     res.redirect('/')
 } %>
 <%- messages() %>
-
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %> <%#eat the errors variable as an array and loop through the array, with each individual error being sent into a callback function.#%>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
 <ul class="add-list">
     <li><a href="/inv/add-classification">Add a new Classification</a></li>
     <li><a href="/inv/add-inventory">Add New Car to Inventory</a></li>

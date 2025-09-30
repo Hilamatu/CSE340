@@ -16,7 +16,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
     let nav = await utilities.getNav()
     const className = data[0].classification_name
     res.render('./inventory/classification', {
-        title: className + 'vehicles',
+        title: className + ' ' + 'vehicles',
         nav,
         grid,
         errors: null,
@@ -143,6 +143,58 @@ invCont.updateInventory = async function (req, res, next) {
     inv_miles,
     inv_color,
     classification_id
+    })
+  }
+}
+
+/* ***************************
+ *  Build delete confirmation view
+ * ************************** */
+invCont.deleteInventoryView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id) //Collect and store the incoming inventory_id as an integer
+  let nav = await utilities.getNav()
+  const itemDataArray = await invModel.getInventoryDetailByInvID(inv_id) //call the model-based function to get all the inventory item data adn pass it to classificationSelect. It will return an array
+  const itemData = itemDataArray[0]// Extract the first item fromteh array
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`//From the returned data, create a "name" variable to hold the Make and Model
+  res.render("./inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price,
+  })
+}
+
+
+//Function that will import the query to delete inventory
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+invCont.deleteInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const inv_id = parseInt(req.body.inv_id) //Collect and store the incoming inventory_id as an integer
+  const itemDataArray = await invModel.getInventoryDetailByInvID(inv_id)// get the array details before it is deleted in order to access make and model
+  const itemDetails = itemDataArray[0] //Get the first item of the array
+  const deleteResult = await addModel.deleteInventory(inv_id)
+  const itemName = itemDetails.inv_make + " " + itemDetails.inv_model
+
+  if (deleteResult) {
+    req.flash("notice", `The ${itemName} was successfully deleted.`)
+    res.redirect("/inv/")
+  } else {
+    req.flash("notice", "Sorry, the delete failed.")
+    res.status(501).render("inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id :itemDetails.inv_id,
+    inv_make : itemDetails.inv_make,
+    inv_model : itemDetails.inv_model,
+    inv_year : itemDetails.inv_year,
+    inv_price : itemDetails.inv_price,
     })
   }
 }

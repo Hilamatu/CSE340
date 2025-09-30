@@ -8,7 +8,7 @@ async function buildMgmtView (req, res, next){
         title: 'Inventory Management Page',
         nav,
         classificationSelect,
-        errors: null
+        errors: null,
         
     })
 }
@@ -25,7 +25,7 @@ async function buildAddClassification(req, res, next_){
 
 //Function that will import the query from Models to add classification
 async function addClassification(req, res) {
-  
+  const classificationSelect = await utilities.buildClassificationList()
   const { classification_name } = req.body
 
   const regResult = await addClassificationModel.addClassification(
@@ -41,6 +41,7 @@ async function addClassification(req, res) {
     res.status(201).render("inventory/management", {
       title: "Add Classification success",
       nav,
+      classificationSelect,
       errors: null
     })
   } else {
@@ -50,6 +51,7 @@ async function addClassification(req, res) {
     res.status(501).render("inventory/management", {
       title: "Add Classification",
       nav,
+      classificationSelect,
       errors: null,
     })
   }
@@ -57,19 +59,21 @@ async function addClassification(req, res) {
 
 // Build add-inventory view
 async function buildAddInventory(req, res, next_){
+    const classificationSelect = await utilities.buildClassificationList()
     let nav = await utilities.getNav()
     let classificationList = await utilities.buildClassificationList() //Call the buildClassificationList to have the drop down reflect the current nav
     res.render('inventory/add-inventory', {
     title: 'Add inventory',
     nav,
     classificationList,
+    classificationSelect,
     errors: null,
 })
 }
 
 //Function that will import the query to add inventory
 async function addInventory(req, res) {
-  
+  const classificationSelect = await utilities.buildClassificationList()
   const { classification_id, inv_make, inv_model, inv_year, inv_image, inv_description, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body
 
   const regResult = await addClassificationModel.addInventory(
@@ -95,6 +99,7 @@ async function addInventory(req, res) {
     res.status(201).render("inventory/management", {
       title: "Add inventory success",
       nav,
+      classificationSelect,
       errors:null,
     })
   } else {
@@ -104,6 +109,7 @@ async function addInventory(req, res) {
     res.status(501).render("inventory/management", {
       title: "Add Inventory",
       nav,
+      classificationSelect,
       errors: null,
     })
   }

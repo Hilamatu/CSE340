@@ -49,7 +49,15 @@ router.post("/update/",
     invValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
 
+// Route to delete inventory. (Path was defined on the /public/js/inventory.js)
+router.get('/delete/:inv_id', utilities.handleErrors(invController.deleteInventoryView))
+
+//Route to handle the incoming request to delete inventory
+router.post('/delete/', utilities.handleErrors(invController.deleteInventory))
+
 // Error Trigger Route
 router.get('/error', utilities.handleErrors(errorController.triggerError));
+
+
 
 module.exports = router;
