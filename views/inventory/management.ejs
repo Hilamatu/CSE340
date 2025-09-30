@@ -10,4 +10,14 @@
     <li><a href="/inv/add-classification">Add a new Classification</a></li>
     <li><a href="/inv/add-inventory">Add New Car to Inventory</a></li>
 </ul>
+<div class="manage-inventory">
+    <h2>Manage Inventory</h2>
+    <p class="modify-instruction">Select a classification to see the inventory for each classification</p>
+    <%- classificationSelect %> <%# EJS code block to display the classificationList%>
+    <table id="inventoryDisplay"></table> <!--Inventory returned from the controller will be inserted here using JS-->
 
+    <noscript>JavaScript must be enable to use this page</noscript> <!--Message to be displayed if JS is not enabled-->
+
+</div>
+
+<script src="../../js/inventory.js"></script>

@@ -35,7 +35,13 @@ router.get('/add-inventory', utilities.handleErrors(managementController.buildAd
 router.post('/add-inventory', 
     invValidate.addInventoryRule(),
         invValidate.checkInventoryData,
-        utilities.handleErrors(managementController.addInventory))
+        utilities.handleErrors(managementController.addInventory));
+
+//Route to display the inventory after selecting the classification
+router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON))
+
+//Rout to build the inventory edit view
+router.get('/edit/:inv_id', utilities.handleErrors(invController.buildInventoryEditView))
 
 // Error Trigger Route
 router.get('/error', utilities.handleErrors(errorController.triggerError));

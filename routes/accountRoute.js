@@ -31,6 +31,6 @@ router.post(
   utilities.handleErrors(accountController.accountLogin));
 
 //Route for the sucessed login view
-router.get('/', utilities.handleErrors(accountController.buildAccountManagementView))
+router.get('/', utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView))
 
 module.exports = router;

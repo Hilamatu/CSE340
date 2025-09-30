@@ -1,0 +1,50 @@
+<% if (title) { %>
+<h1><%=title%></h1>
+<%
+} else {
+    res.redirect('/')
+} %>
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %> <%#eat the errors variable as an array and loop through the array, with each individual error being sent into a callback function.#%>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<div class="form-wrapper">
+    <div class="form-container">
+        <form class="form-grid" action="/inv/edit-inventory" method="POST">
+            <label for="classificationList">Classification</label>
+            <%- classificationSelect %> <%# Render the dropdown list #%>
+            <label for="invmake">Make</label>
+            <input type="text" id="invmake" name="inv_make" minlength="3" placeholder="Min of 3 characters" pattern="^[A-Za-z]+$" required value="<%= locals.inv_make %>">
+            
+            <label for="invmodel">Model</label>
+            <input type="text" id="invmodel" name="inv_model" minlength="3" placeholder="Min of 3 characters" required value="<%= locals.inv_model %>">
+
+            <label for="invyear">Year</label>
+            <input type="number" id="invyear" name="inv_year" min="1500" max="9999" placeholder="4 Digits Year" required value="<%= locals.inv_year %>">
+
+            <label for="invdescription">Description</label>
+            <textarea id="invdescription" name="inv_description"  rows="10"  cols="30" required><%= locals.inv_description %></textarea>
+
+            <label for="invimage">Image path</label>
+            <input type="text" id="invimage" name="inv_image" required value="<%= locals.inv_image %>">
+
+            <label for="invthumbnail">Thumbnail</label>
+            <input type="text" id="invthumbnail" name="inv_thumbnail" required value="<%= locals.inv_thumbnail %>">
+
+            <label for="invprice">Price</label>
+            <input type="number" id="invprice" name="inv_price" placeholder="Digits Only" required value="<%= locals.inv_price %>">
+
+            <label for="invmiles">Miles</label>
+            <input type="number" id="invmiles" name="inv_miles" placeholder="Digits Only" required value="<%= locals.inv_miles %>">
+
+            <label for="invcolor">Color</label>
+            <input type="text" id="invcolor" name="inv_color" required value="<%= locals.inv_color %>">
+            <input class="form-button" type="submit" name="submit" value="Update Vehicle">
+        </form>
+    </div>
+</div>

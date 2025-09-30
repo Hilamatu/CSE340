@@ -3,9 +3,11 @@ const addClassificationModel = require('../models/add-model')
 
 async function buildMgmtView (req, res, next){
     let nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList()
     res.render('inventory/management', {
         title: 'Inventory Management Page',
         nav,
+        classificationSelect,
         errors: null
         
     })
@@ -106,5 +108,6 @@ async function addInventory(req, res) {
     })
   }
 }
+
 
 module.exports = {buildMgmtView, buildAddClassification, addClassification, buildAddInventory, addInventory}
