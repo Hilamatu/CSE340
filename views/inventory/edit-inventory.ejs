@@ -15,7 +15,7 @@
 
 <div class="form-wrapper">
     <div class="form-container">
-        <form class="form-grid" action="/inv/update" method="POST">
+        <form id ="updateForm"class="form-grid" action="/inv/update" method="POST">
             <label for="classificationList">Classification</label>
             <%- classificationSelect %> <%# Render the dropdown list #%>
             <label for="invmake">Make</label>
@@ -44,7 +44,7 @@
 
             <label for="invcolor">Color</label>
             <input type="text" id="invcolor" name="inv_color" required value="<%= locals.inv_color %>">
-            <input class="form-button" type="submit" name="submit" value="Update Vehicle">
+            <input disabled class="update-button" type="submit" name="submit" value="Update Vehicle">
 
             <input type="hidden" name="inv_id"
                 <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
@@ -52,3 +52,5 @@
         </form>
     </div>
 </div>
+
+<script src="../../js/inv-update.js"></script>
