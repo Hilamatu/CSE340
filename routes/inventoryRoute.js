@@ -43,6 +43,12 @@ router.get('/getInventory/:classification_id', utilities.handleErrors(invControl
 //Rout to build the inventory edit view
 router.get('/edit/:inv_id', utilities.handleErrors(invController.buildInventoryEditView))
 
+//Route to handle the incoming request from the form
+router.post("/update/", 
+    invValidate.addInventoryRule(),
+    invValidate.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory))
+
 // Error Trigger Route
 router.get('/error', utilities.handleErrors(errorController.triggerError));
 
