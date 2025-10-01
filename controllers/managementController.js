@@ -4,10 +4,12 @@ const addClassificationModel = require('../models/add-model')
 async function buildMgmtView (req, res, next){
     let nav = await utilities.getNav()
     const classificationSelect = await utilities.buildClassificationList()
+    const accountData = res.locals.accountData;
     res.render('inventory/management', {
         title: 'Inventory Management Page',
         nav,
         classificationSelect,
+        accountData,
         errors: null,
         
     })

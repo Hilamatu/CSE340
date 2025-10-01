@@ -129,4 +129,102 @@ async function buildAccountManagementView(req, res, next_){
     })
   }
 
-module.exports = {buildAccountView, buildRegister, registerAccount, accountLogin, buildAccountManagementView} // Exports an object not the function
+  /* ***************************
+   *  Build account update view
+   * ************************** */
+  async function buildUpdateAccountView(req, res, next) {
+    const account_id = parseInt(req.params.account_id) //Collect and store the incoming inventory_id as an integer
+    let nav = await utilities.getNav()
+    const accountDataArray = await accountModel.getAccountById(account_id) //call the model-based function to get all the account data
+    const accountData = accountDataArray[0]// Extract the first item from the array
+    const accountName = `${accountData.account_firstname}`//From the returned data, create a "name" variable to hold the Make and Model
+    res.render("./account/update-account", {
+      title: "Update " + accountName + " " + "Account",
+      nav,
+      errors: null,
+      account_id: accountData.account_id,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
+    })
+  }
+
+  //Function that will import the query to update account
+  /* ***************************
+   *  Update account Data
+   * ************************** */
+  async function updateAccount(req, res, next) {
+    let nav = await utilities.getNav()
+    const { account_id, account_firstname, account_lastname, account_email } = req.body
+
+    const updateResult = await accountModel.updateAccount(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+  )
+
+  if (updateResult) {
+    req.flash(
+      "notice",
+      `Congratulations, account updated ${account_firstname}. Please log in.`
+    )
+    res.status(200).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry,the update failed.")
+    res.status(500).render("account/update-account", {
+      title: "Update",
+      nav,
+      errors: null,      
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      })
+    }
+  }
+
+async function passwordUpdate(req, res, next) {
+  const nav = await utilities.getNav();
+  const { account_id, account_password, account_firstname } = req.body;
+
+  try {
+    const hashedPassword = await bcrypt.hash(account_password, 10);
+
+    const updateResult = await accountModel.updatePassword(account_id, hashedPassword);
+
+    if (updateResult) {
+      req.flash("notice", `Congratulations, password updated ${account_firstname}. Please log in.`);
+      return res.status(200).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+      });
+    } else {
+      req.flash("notice", "Sorry, the update failed.");
+      return res.status(500).render("account/update-account", {
+        title: "Update",
+        nav,
+        errors: null,
+        account_id,
+      });
+    }
+  } catch (error) {
+    console.error("Password update error:", error);
+    req.flash("notice", "Sorry, there was an error processing the update.");
+    return res.status(500).render("account/update-account", {
+      title: "Update",
+      nav,
+      errors: null,
+      account_id,
+    });
+  }
+}
+
+  
+
+module.exports = {buildAccountView, buildRegister, registerAccount, accountLogin, buildAccountManagementView, buildUpdateAccountView, updateAccount, passwordUpdate} // Exports an object not the function

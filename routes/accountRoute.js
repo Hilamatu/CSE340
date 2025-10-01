@@ -4,6 +4,7 @@ const router = new express.Router()
 const accountController = require ('../controllers/accountController')
 const utilities = require('../utilities/')
 const regValidate = require('../utilities/account-validation')
+const validate = require('../utilities/account-validation')
 
 /* *************************************
  "GET" route for the path that will be sent when the "My Account" link is clicked.
@@ -44,5 +45,21 @@ router.get("/logout", (req, res) => {
     res.redirect("/")        // send user back to home
   })
 })
+
+//Route to update the account information
+router.get('/update/:account_id', utilities.handleErrors(accountController.buildUpdateAccountView))
+
+//Route to handle the incoming request from the form to update the account
+router.post("/update/",
+  regValidate.accountUpdateRules(),
+  regValidate.passwordUpdateRule(),
+  regValidate.checkUpdateData,
+  utilities.handleErrors(accountController.updateAccount)
+)
+
+router.post("/update-password/", 
+  validate.passwordUpdateRule(),
+  utilities.handleErrors(accountController.passwordUpdate)
+)
 
 module.exports = router;
