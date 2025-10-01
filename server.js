@@ -36,6 +36,13 @@ const cookieParser = require("cookie-parser") //require the cookie parser that w
   name: 'sessionId',
 }))
 
+// Make session data available to all views
+app.use((req, res, next) => {
+  res.locals.loggedin = req.session.loggedin || false
+  res.locals.accountData = req.session.accountData || {}
+  next()
+})
+
 // Express messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res,next){

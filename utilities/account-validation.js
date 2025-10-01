@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator") //we use the fir
 const validate = {}
 const accountModel = require("../models/account-model")
 
+
 /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
@@ -125,5 +126,20 @@ validate.checkLoginData = async (req, res, next) => {
   }
   next()
 }
+
+/* **************************************
+* Checks if the account type is admin or employee and deliver the page accordingly
+********************************************************* */
+validate.checkAccountType = (req, res, next) => {
+  const accountType = res.locals.accountData?.account_type;
+
+  if (["Admin", "Employee"].includes(accountType)) {
+    return next();
+  }
+
+  req.flash("notice", "Access denied. Admins or Employees only.");
+  return res.redirect("/account/login");
+};
+
 
 module.exports = validate

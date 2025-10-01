@@ -33,4 +33,16 @@ router.post(
 //Route for the sucessed login view
 router.get('/', utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView))
 
+router.get("/logout", (req, res) => {
+  // Destroy session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err)
+    }
+    // Clear JWT cookie
+    res.clearCookie("jwt")   // match the name used in utilities.checkJWTToken
+    res.redirect("/")        // send user back to home
+  })
+})
+
 module.exports = router;

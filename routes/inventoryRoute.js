@@ -6,21 +6,31 @@ const utilities = require('../utilities/')
 const errorController = require('../controllers/errorController')
 const managementController = require('../controllers/managementController')
 const invValidate = require("../utilities/inventory-validation")
+const accountValidate = require("../utilities/account-validation")
 
 //Route to build inventory management view
-router.get('/management', utilities.handleErrors(invController.buildManagementView));
+router.get('/management', 
+    utilities.checkLogin,
+    accountValidate.checkAccountType, // Just pass the middleware function to mnake sure it doesn't run immediatelly 
+    utilities.handleErrors(invController.buildManagementView));
 
 //Route to build inventory by classification view
-router.get('/type/:classificationId', utilities.handleErrors(invController.buildByClassificationId));
+router.get('/type/:classificationId', 
+    utilities.handleErrors(invController.buildByClassificationId));
 
 //details route
 router.get('/detail/:invId', utilities.handleErrors(invController.buildByInvIdView));
 
 //Add management view route
-router.get('/', utilities.handleErrors(managementController.buildMgmtView))
+router.get('/', 
+    utilities.checkLogin,
+    accountValidate.checkAccountType, utilities.handleErrors(managementController.buildMgmtView))
 
 //Add classification route
-router.get('/add-classification', utilities.handleErrors(managementController.buildAddClassification))
+router.get('/add-classification', 
+    utilities.checkLogin,
+    accountValidate.checkAccountType,
+    utilities.handleErrors(managementController.buildAddClassification))
 
 //Post the add-classification
 router.post('/add-classification', 
@@ -29,7 +39,10 @@ router.post('/add-classification',
       utilities.handleErrors(managementController.addClassification))
 
 //Add inventory route
-router.get('/add-inventory', utilities.handleErrors(managementController.buildAddInventory))
+router.get('/add-inventory', 
+    utilities.checkLogin,
+    accountValidate.checkAccountType,
+    utilities.handleErrors(managementController.buildAddInventory))
 
 //Post the add-inventory
 router.post('/add-inventory', 
@@ -41,7 +54,10 @@ router.post('/add-inventory',
 router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON))
 
 //Rout to build the inventory edit view
-router.get('/edit/:inv_id', utilities.handleErrors(invController.buildInventoryEditView))
+router.get('/edit/:inv_id', 
+    utilities.checkLogin,
+    accountValidate.checkAccountType,
+    utilities.handleErrors(invController.buildInventoryEditView))
 
 //Route to handle the incoming request from the form
 router.post("/update/", 
@@ -50,7 +66,10 @@ router.post("/update/",
     utilities.handleErrors(invController.updateInventory))
 
 // Route to delete inventory. (Path was defined on the /public/js/inventory.js)
-router.get('/delete/:inv_id', utilities.handleErrors(invController.deleteInventoryView))
+router.get('/delete/:inv_id', 
+    utilities.checkLogin,
+    accountValidate.checkAccountType,
+    utilities.handleErrors(invController.deleteInventoryView))
 
 //Route to handle the incoming request to delete inventory
 router.post('/delete/', utilities.handleErrors(invController.deleteInventory))

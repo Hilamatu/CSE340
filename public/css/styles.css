@@ -459,7 +459,12 @@ input:required:invalid, input:focus:invalid {
   transform: translateY(-2px)
 }
 
-
+.logged-links li{
+  list-style: none;
+  margin-right: 15px;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
 /* ========== MOBILE STYLES ========== */
 @media (max-width: 768px) {
 
