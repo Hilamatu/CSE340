@@ -16,7 +16,7 @@
 <div class="form-wrapper"> 
     <div class="form-container">
         <p>Confirm Deletion - <strong>The delete is permanent.</strong></p>
-        <form id ="deleteForm"class="form-grid" action="/inv/delete" method="POST">
+        <form id ="deleteForm"class="form-grid" action="/inv/delete/<%= inv_id %>" method="POST">
             <label for="invmake">Make</label>
             <input type="text" id="invmake" name="inv_make" minlength="3" placeholder="Min of 3 characters" pattern="^[A-Za-z]+$" readonly value="<%= locals.inv_make %>">
             
