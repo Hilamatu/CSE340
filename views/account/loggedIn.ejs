@@ -4,9 +4,7 @@
 } else {
     res.redirect('/')
 } %>
-<% if (notice && notice.length > 0) { %>
-  <div class="flash-message"><%= notice[0] %></div>
-<% } %>
+
 <%- messages() %>
 
 <div class="all-users">
