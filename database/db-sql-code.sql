@@ -1,6 +1,10 @@
 CREATE TYPE public.account_type AS ENUM
     ('Employee', 'Admin', 'Client');
 
+--Create the ENUM type for the inventory status--
+CREATE TYPE public.inv_status AS ENUM
+    ('Available', 'Sold', 'In Negotitation');
+
 ALTER TYPE public.account_type
     OWNER TO cse340;
 
@@ -21,6 +25,7 @@ CREATE TABLE IF NOT EXISTS public.inventory
 	inv_price numeric (9, 0) NOT NULL,
 	inv_miles integer NOT NULL,
 	inv_color character varying NOT NULL,
+  inv_status inv_status NOT NULL DEFAULT 'Available'::inv_status,
 	classification_id integer NOT NULL,
 	CONSTRAINT inventory_pkey PRIMARY KEY (inv_id)
 );
@@ -252,3 +257,4 @@ WHERE c.classification_name = 'sport';
 UPDATE inventory
 SET inv_image = REPLACE(inv_image, '/images/','/images/vehicles/'), 
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/','/images/vehicles/');
+

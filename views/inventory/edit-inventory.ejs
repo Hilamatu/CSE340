@@ -44,6 +44,9 @@
 
             <label for="invcolor">Color</label>
             <input type="text" id="invcolor" name="inv_color" required value="<%= locals.inv_color %>">
+
+            <label for="statusList">Status</label>
+            <%- statusSelect %> <%# Render the dropdown list fo status #%>
             <input disabled class="update-button" type="submit" name="submit" value="Update Vehicle">
 
             <input type="hidden" name="inv_id"

@@ -5,8 +5,10 @@ async function buildMgmtView (req, res, next){
     let nav = await utilities.getNav()
     const classificationSelect = await utilities.buildClassificationList()
     const accountData = res.locals.accountData;
+    const notice = req.flash("notice");
     res.render('inventory/management', {
         title: 'Inventory Management Page',
+        notice,
         nav,
         classificationSelect,
         accountData,

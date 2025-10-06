@@ -66,6 +66,7 @@ invCont.buildInventoryEditView = async function (req, res, next) {
   const itemDataArray = await invModel.getInventoryDetailByInvID(inv_id) //call the model-based function to get all the inventory item data adn pass it to classificationSelect. It will return an array
   const itemData = itemDataArray[0]// Extract the first item fromteh array
   const classificationSelect = await utilities.buildClassificationList(itemData.classification_id) //Builds the classification list using the itemData
+  const statusSelect = await utilities.buildStatusList(itemData.inv_status) //Builds the status list using the itemData
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`//From the returned data, create a "name" variable to hold the Make and Model
   res.render("./inventory/edit-inventory", {
     title: "Edit " + itemName,
@@ -82,6 +83,7 @@ invCont.buildInventoryEditView = async function (req, res, next) {
     inv_price: itemData.inv_price,
     inv_miles: itemData.inv_miles,
     inv_color: itemData.inv_color,
+    statusSelect: statusSelect,
     classification_id: itemData.classification_id
   })
 }
@@ -103,6 +105,7 @@ invCont.updateInventory = async function (req, res, next) {
     inv_year,
     inv_miles,
     inv_color,
+    inv_status,
     classification_id,
   } = req.body
   const updateResult = await addModel.updateInventory(
@@ -116,6 +119,7 @@ invCont.updateInventory = async function (req, res, next) {
     inv_year,
     inv_miles,
     inv_color,
+    inv_status,
     classification_id
   )
 
@@ -125,6 +129,7 @@ invCont.updateInventory = async function (req, res, next) {
     res.redirect("/inv/")
   } else {
     const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const statusSelect = await utilities.buildStatusList(itemData.inv_status) //Builds the status list using the itemData
     const itemName = `${inv_make} ${inv_model}`
     req.flash("notice", "Sorry, the insert failed.")
     res.status(501).render("inventory/edit-inventory", {
@@ -142,6 +147,7 @@ invCont.updateInventory = async function (req, res, next) {
     inv_price,
     inv_miles,
     inv_color,
+    statusSelect: statusSelect,
     classification_id
     })
   }

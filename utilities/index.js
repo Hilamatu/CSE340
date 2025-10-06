@@ -49,6 +49,9 @@ Util.buildClassificationGrid = async function(data){
       grid += '</h2>'
       grid += '<span>$' 
       + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+      grid += '<h3 class=status>'
+      grid += vehicle.inv_status
+      grid += '</h3>'
       grid += '</div>'
       grid += '</li>'
     })
@@ -77,6 +80,9 @@ Util.buildDetailView = async function(data){
     grid += '<ul>'
     grid += '<li><strong>Color: </strong>' + data[0].inv_color + '</li>'
     grid += '<li><strong>Mileage: </strong>' + new Intl.NumberFormat('en-US').format(data[0].inv_miles) + '</li>'
+    grid += '<h3 class=status>'
+    grid += data[0].inv_status
+    grid += '</h3>'
     grid += '</ul>'
     grid += '</div>'
     grid += '</section>'
@@ -106,6 +112,25 @@ Util.buildClassificationList = async function (classification_id = null) {
     classificationList += "</select>"
     return classificationList
   }
+
+  //Add inventory status reponsivwe dropdown list
+Util.buildStatusList = async function (currentStatus = null) { // Null means no status has been selected yet
+  const validStatuses = ['Available', 'Sold', 'In Negotitation']; // ENUM values
+
+  let statusList = '<select name="inv_status" id="statusList" required>';
+  statusList += "<option value=''>Choose a status</option>";
+
+  validStatuses.forEach((status) => { // Loops through the validStatuses array and builds option element for each status
+    statusList += `<option value="${status}"`;
+    if (currentStatus && status === currentStatus) {
+      statusList += " selected";
+    }
+    statusList += `>${status}</option>`;
+  });
+
+  statusList += "</select>";
+  return statusList;
+};
 
   /* ****************************************
 * Middleware to check token validity

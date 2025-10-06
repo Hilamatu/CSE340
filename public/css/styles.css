@@ -474,6 +474,14 @@ input:required:invalid, input:focus:invalid {
   font-size: 20px;
 }
 
+.flash-message {
+  padding: 10px;
+  margin-bottom: 15px;
+  color: #006600;
+  font-weight: bold;
+  font-style: italic;
+}
+
 
 /* ========== MOBILE STYLES ========== */
 @media (max-width: 768px) {
